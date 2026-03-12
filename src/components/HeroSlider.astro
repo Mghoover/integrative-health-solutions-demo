@@ -1,0 +1,191 @@
+---
+import { Image } from "astro:assets";
+import focusedCareImage from "../assets/hero/focusedcare.jpg";
+import getHealthyStayHealthyImage from "../assets/hero/gethealthystayhealthy.jpg";
+import newPatientsWelcomeImage from "../assets/hero/newpatientswelcome.jpg";
+
+let googleBadge = null;
+
+try {
+  const reviewsModule = await import("../data/google-reviews.json");
+  const reviewsData = reviewsModule?.default ?? reviewsModule;
+  const rating = Number(reviewsData?.rating);
+  const totalReviews = Number(reviewsData?.totalReviews);
+  const googleUrl = reviewsData?.googleUrl;
+
+  if (!Number.isNaN(rating) && !Number.isNaN(totalReviews) && googleUrl) {
+    googleBadge = {
+      rating: rating.toFixed(1),
+      totalReviews,
+      googleUrl,
+    };
+  }
+} catch {
+  googleBadge = null;
+}
+
+const slides = [
+  {
+    title: "Get Healthy. Stay Healthy.",
+    image: getHealthyStayHealthyImage,
+    backgroundPosition: "center",
+  },
+  {
+    title: "Focused Care",
+    image: focusedCareImage,
+    backgroundPosition: "center",
+  },
+  {
+    title: "New Patients Welcome",
+    image: newPatientsWelcomeImage,
+    backgroundPosition: "center",
+  },
+];
+---
+<section class="hero-carousel" aria-label="Homepage featured messages">
+  <div class="hero-carousel__track">
+    {slides.map((slide, index) => (
+      <article
+        class={`hero-carousel__slide ${index === 0 ? "is-active" : ""}`}
+        style={`--hero-position: ${slide.backgroundPosition ?? "center"};`}
+        aria-hidden={index === 0 ? "false" : "true"}
+      >
+        <Image
+          class="hero-carousel__image"
+          src={slide.image}
+          alt={`${slide.title} at Integrative Health Solutions in Florence SC`}
+          widths={index === 0 ? [480, 768, 960] : [360, 640, 768]}
+          sizes="100vw"
+          format="webp"
+          quality={index === 0 ? 60 : 32}
+          loading={index === 0 ? "eager" : "lazy"}
+          fetchpriority={index === 0 ? "high" : "auto"}
+          decoding="async"
+        />
+        <div class="hero-carousel__overlay"></div>
+        <div class="hero-carousel__content container">
+          <h1>{slide.title}</h1>
+          <a class="btn btn-primary" href="/contact-us/">Request Appointment</a>
+          {googleBadge && (
+            <a
+              class="hero-rating-badge"
+              href={googleBadge.googleUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {`\u2605 ${googleBadge.rating} on Google \u2022 ${googleBadge.totalReviews} reviews`}
+            </a>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const carousels = document.querySelectorAll(".hero-carousel");
+
+    carousels.forEach((carousel) => {
+      const slides = Array.from(carousel.querySelectorAll(".hero-carousel__slide"));
+      if (slides.length < 2) return;
+
+      let currentIndex = 0;
+      let intervalId;
+
+      const setActiveSlide = (nextIndex) => {
+        currentIndex = (nextIndex + slides.length) % slides.length;
+
+        slides.forEach((slide, index) => {
+          const isActive = index === currentIndex;
+          slide.classList.toggle("is-active", isActive);
+          slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+        });
+      };
+
+      const stopRotation = () => {
+        if (intervalId) {
+          window.clearInterval(intervalId);
+          intervalId = undefined;
+        }
+      };
+
+      const startRotation = () => {
+        stopRotation();
+        intervalId = window.setInterval(() => {
+          setActiveSlide(currentIndex + 1);
+        }, 6000);
+      };
+
+      carousel.addEventListener("mouseenter", stopRotation);
+      carousel.addEventListener("mouseleave", startRotation);
+
+      setActiveSlide(0);
+      startRotation();
+    });
+  })();
+
+  (() => {
+    if (window.__ihsRevealObserverInitialized) return;
+    window.__ihsRevealObserverInitialized = true;
+
+    const initReveals = () => {
+      const sections = Array.from(document.querySelectorAll(".section"));
+
+      sections.forEach((section) => {
+        const cards = Array.from(section.querySelectorAll(".card"));
+        cards.forEach((card, index) => {
+          if (!card.hasAttribute("data-reveal-delay")) {
+            card.setAttribute("data-reveal-delay", `${Math.min(index * 90, 360)}ms`);
+          }
+        });
+
+        const reviewCards = Array.from(section.querySelectorAll(".review-card"));
+        reviewCards.forEach((card, index) => {
+          card.setAttribute("data-reveal-delay", `${Math.min(index * 90, 360)}ms`);
+        });
+      });
+
+      const targets = Array.from(document.querySelectorAll(".section, .card, .review-card"));
+      if (targets.length === 0) return;
+
+      targets.forEach((element) => {
+        element.classList.add("reveal");
+
+        const rawDelay = (element.getAttribute("data-reveal-delay") || "").trim();
+        if (rawDelay.length === 0) return;
+
+        const normalizedDelay = /ms$|s$/i.test(rawDelay) ? rawDelay : `${rawDelay}ms`;
+        element.style.transitionDelay = normalizedDelay;
+      });
+
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        targets.forEach((element) => element.classList.add("is-visible"));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries, activeObserver) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            activeObserver.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.15,
+          rootMargin: "0px 0px -30px 0px",
+        },
+      );
+
+      targets.forEach((element) => observer.observe(element));
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initReveals, { once: true });
+    } else {
+      initReveals();
+    }
+  })();
+</script>

@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const formId = (import.meta.env.JOT_UHC_FORM ?? "").trim();
+---
+<BaseLayout title="United Healthcare Summary | Best Florence Chiropractor" description="United Healthcare summary form.">
+<Header />
+<main class="container">
+  <section class="section">
+    <div class="card">
+      <h1>United Healthcare Summary</h1>
+      <p class="muted">Please complete this form before your appointment.</p>
+      {formId ? (
+        <div class="form-embed" data-form-id={formId}>
+          <script is:inline>
+            (() => {
+              const root = document.currentScript?.parentElement;
+              const id = root?.getAttribute("data-form-id");
+              if (!id) return;
+              const script = document.createElement("script");
+              script.src = `https://form.jotform.com/jsform/${id}`;
+              root.appendChild(script);
+            })();
+          </script>
+        </div>
+      ) : (
+        <p class="muted">Form coming soon.</p>
+      )}
+    </div>
+  </section>
+</main>
+<Footer />
+</BaseLayout>

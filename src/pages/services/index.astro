@@ -1,0 +1,257 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+import ServiceCard from "../../components/ServiceCard.astro";
+import { pages } from "../../content/pages";
+import { conditions } from "../../config/conditions";
+
+const fullScriptsUrl = (import.meta.env.FULL_SCRIPTS ?? "").trim();
+const standardProcessUrl = (import.meta.env.STD_PROC ?? "").trim();
+const standardProcessCode = (import.meta.env.STD_CODE ?? "").trim();
+
+const hasFullScriptsUrl = fullScriptsUrl.length > 0;
+const hasStandardProcessUrl = standardProcessUrl.length > 0;
+const hasStandardProcessCode = standardProcessCode.length > 0;
+const services = await getCollection("services");
+const heroServiceSlugs = ["chiropractic", "laser-therapy", "body-contouring"];
+const heroServiceOrder = new Map(heroServiceSlugs.map((slug, index) => [slug, index]));
+const primary = services
+  .filter((service) => service.data.category?.toLowerCase() === "primary")
+  .sort((a, b) => {
+    const aRank = heroServiceOrder.get(a.data.slug) ?? Number.POSITIVE_INFINITY;
+    const bRank = heroServiceOrder.get(b.data.slug) ?? Number.POSITIVE_INFINITY;
+    if (aRank !== bRank) return aRank - bRank;
+    return a.data.title.localeCompare(b.data.title);
+  });
+
+const additional = services.filter(
+  (service) => service.data.category?.toLowerCase() === "additional"
+);
+
+const toParagraphs = (text = "") =>
+  text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+---
+<BaseLayout title="Services | Best Florence Chiropractor" description="Services page.">
+<Header />
+<main class="container">
+  <section class="section">
+    <h1>Services</h1>
+    <div class="card">
+      {toParagraphs(pages.services.intro).map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+    <div class="services">
+      <h2>Primary Services</h2>
+      <div class="services-grid">
+        {primary.map((service) => (
+          <ServiceCard
+            title={service.data.title}
+            summary={service.data.summary}
+            image={service.data.image}
+            slug={service.data.slug}
+          />
+        ))}
+      </div>
+
+      <h2>Additional Services</h2>
+      <div class="services-grid services-grid-small">
+        {additional.map((service) => (
+          <ServiceCard
+            title={service.data.title}
+            summary={service.data.summary}
+            image={service.data.image}
+            slug={service.data.slug}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conditions-card">
+      <h2>Conditions We Help</h2>
+      <div class="conditions-grid">
+        {conditions.map((condition) => (
+          <div class="condition-item">{`\u2714 ${condition}`}</div>
+        ))}
+      </div>
+    </div>
+    <div class="card">
+      {toParagraphs(pages.services.closingText).map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+
+    <div class="portal-grid">
+      <div class="card portal-card">
+        <p class="portal-label">Supplement Portal</p>
+        <h3>Fullscript</h3>
+        <p class="muted">Order provider-approved supplements through the Fullscript patient portal.</p>
+        {hasFullScriptsUrl ? (
+          <a
+            class="btn btn-primary"
+            href={fullScriptsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Access Fullscript Patient Portal
+          </a>
+        ) : (
+          <>
+            <p class="muted">Portal link coming soon.</p>
+            <button class="btn btn-secondary" type="button" disabled aria-disabled="true">
+              Access Fullscript Patient Portal
+            </button>
+          </>
+        )}
+      </div>
+
+      <div class="card portal-card">
+        <p class="portal-label">Supplement Portal</p>
+        <h3>Standard Process</h3>
+        <p class="muted">Use your provider code to access Standard Process ordering.</p>
+        <div class="portal-code-row">
+          <span class="portal-code">{hasStandardProcessCode ? standardProcessCode : "Code coming soon"}</span>
+          {hasStandardProcessCode && (
+            <button
+              class="btn btn-secondary portal-copy-btn"
+              type="button"
+              data-copy-value={standardProcessCode}
+              data-status-id="std-code-copy-status"
+            >
+              Copy code
+            </button>
+          )}
+        </div>
+        <p class="muted portal-copy-status" id="std-code-copy-status" aria-live="polite"></p>
+        {hasStandardProcessUrl ? (
+          <a
+            class="btn btn-primary"
+            href={standardProcessUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Access Standard Process Portal
+          </a>
+        ) : (
+          <>
+            <p class="muted">Portal link coming soon.</p>
+            <button class="btn btn-secondary" type="button" disabled aria-disabled="true">
+              Access Standard Process Portal
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+
+    <p class="muted portal-disclaimer">
+      These links take you to external supplement ordering portals.
+    </p>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container cta-content">
+      <h2>Ready to Start Your Visit?</h2>
+      <p>
+        Begin your patient intake and schedule your visit with our clinic.
+      </p>
+      <a href="/contact-us/" class="btn btn-primary">
+        Start Patient Intake
+      </a>
+    </div>
+  </section>
+
+  <section class="trust-band">
+    <div class="container">
+      <p>
+        Trusted chiropractic and wellness care serving the Florence community.
+      </p>
+    </div>
+  </section>
+</main>
+<Footer />
+<style>
+  .services {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+
+  .services h2 {
+    margin-top: 40px;
+    margin-bottom: 12px;
+    font-size: 1.6rem;
+  }
+
+  .services h1 {
+    margin-bottom: 30px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    margin: 30px 0 50px;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .services-grid-small {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  :global(.services-grid > *) {
+    grid-column: auto !important;
+    min-width: 0;
+  }
+
+  :global(.services-grid .service-card) {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  @media (max-width: 1000px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .services-grid-small {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+<script is:inline>
+  (() => {
+    const copyButtons = Array.from(document.querySelectorAll(".portal-copy-btn"));
+    if (copyButtons.length === 0) return;
+
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const value = button.getAttribute("data-copy-value") || "";
+        const statusId = button.getAttribute("data-status-id");
+        const statusElement = statusId ? document.getElementById(statusId) : null;
+        if (!value) return;
+
+        try {
+          await navigator.clipboard.writeText(value);
+          if (statusElement) statusElement.textContent = "Code copied.";
+        } catch {
+          if (statusElement) statusElement.textContent = "Unable to copy automatically. Please copy manually.";
+        }
+      });
+    });
+  })();
+</script>
+</BaseLayout>

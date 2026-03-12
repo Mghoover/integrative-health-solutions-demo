@@ -1,0 +1,351 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import LocalServiceArea from "../../components/LocalServiceArea.astro";
+import { conditionEntries } from "../../data/conditions";
+import { serviceLinks } from "../../data/services";
+import type { ConditionDetail } from "../../types/condition-detail";
+
+export function getStaticPaths() {
+  return conditionEntries.map((condition) => ({
+    params: { slug: condition.slug },
+    props: { condition }
+  }));
+}
+
+const { condition } = Astro.props as { condition: ConditionDetail };
+
+const serviceTitleBySlug = new Map(serviceLinks.map((service) => [service.slug, service.title]));
+const toTitleCase = (slug: string) =>
+  slug
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+
+const recommendedServices = condition.services.map((slug) => ({
+  slug,
+  title: serviceTitleBySlug.get(slug) ?? toTitleCase(slug)
+}));
+const symptomItems =
+  condition.commonSymptoms && condition.commonSymptoms.length > 0
+    ? condition.commonSymptoms
+    : ["Pain or discomfort", "Stiffness", "Reduced mobility", "Activity-related limitation"];
+const possibleCauseItems =
+  condition.possibleCauses && condition.possibleCauses.length > 0
+    ? condition.possibleCauses
+    : [
+        "Muscle strain",
+        "Joint irritation",
+        "Movement dysfunction",
+        "Postural stress",
+        "Overuse-related tissue irritation"
+      ];
+const seoTitle = `${condition.title} in Florence SC`;
+const canonicalUrl = `https://bestflorencechiro.com/conditions/${condition.slug}`;
+const ctaTitle = condition.cta?.title ?? "Schedule a Consultation";
+const ctaDescription =
+  condition.cta?.description ??
+  "If your symptoms are affecting daily activity, our clinic can help evaluate your condition and discuss conservative care options.";
+const ctaButtonText = condition.cta?.buttonText ?? "Schedule Appointment";
+const ctaButtonHref = condition.cta?.buttonHref ?? "/contact-us/";
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://bestflorencechiro.com"
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Conditions",
+      item: "https://bestflorencechiro.com/conditions"
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: condition.title
+    }
+  ]
+};
+const relatedConditionOrder = [
+  { slug: "back-pain", label: "Back Pain" },
+  { slug: "neck-pain", label: "Neck Pain" },
+  { slug: "whiplash", label: "Whiplash" },
+  { slug: "headaches", label: "Headaches" },
+  { slug: "neuropathy", label: "Neuropathy" }
+];
+const availableConditionSlugs = new Set(conditionEntries.map((entry) => entry.slug));
+const relatedConditions = relatedConditionOrder.filter(
+  (entry) => entry.slug !== condition.slug && availableConditionSlugs.has(entry.slug)
+);
+const faqSchema =
+  condition.faq && condition.faq.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: condition.faq.map((q) => ({
+          "@type": "Question",
+          name: q.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: q.answer
+          }
+        }))
+      }
+    : null;
+---
+
+<BaseLayout title={seoTitle} description={condition.heroTagline}>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={`${seoTitle} | Integrative Health Solutions`} />
+    <meta property="og:description" content={condition.heroTagline} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  </Fragment>
+
+  <Header />
+
+  <main class="container">
+    <section class="section condition-hero">
+      <div class="condition-heading">
+        <p class="condition-label">Condition Page</p>
+        <h1>{condition.title}</h1>
+        <p class="condition-tagline">{condition.heroTagline}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="condition-content">
+        <article class="card condition-card">
+          <h2>Overview</h2>
+          {condition.intro.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </article>
+
+        <article class="card condition-card">
+          <h2>Common Symptoms</h2>
+          <ul class="condition-bullets">
+            {symptomItems.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </article>
+
+        <article class="card condition-card">
+          <h2>Possible Causes</h2>
+          <ul class="condition-bullets">
+            {possibleCauseItems.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </article>
+
+        <article class="card condition-card">
+          <h2>When To Seek Care</h2>
+          <p>
+            If pain persists, worsens, or interferes with daily activities, evaluation by a
+            healthcare professional may help determine appropriate treatment.
+          </p>
+        </article>
+
+        <article class="card condition-card">
+          <h2>Treatments That May Help</h2>
+          <ul class="recommended-services">
+            {recommendedServices.map((service) => (
+              <li>
+                <a href={`/services/${service.slug}`}>{service.title}</a>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        {condition.faq && condition.faq.length > 0 && (
+          <article class="card condition-card">
+            <h2>FAQ</h2>
+            <div class="condition-faq-list">
+              {condition.faq.map((entry) => (
+                <article class="condition-faq-item">
+                  <h3>{entry.question}</h3>
+                  <p>{entry.answer}</p>
+                </article>
+              ))}
+            </div>
+          </article>
+        )}
+
+        <article class="cta-banner condition-cta" aria-label="Schedule Consultation">
+          <div class="cta-content">
+            <h2>{ctaTitle}</h2>
+            <p>{ctaDescription}</p>
+            <a href={ctaButtonHref} class="btn btn-primary">{ctaButtonText}</a>
+          </div>
+        </article>
+
+        {relatedConditions.length > 0 && (
+          <article class="card condition-card related-conditions-card">
+            <h2>Related Conditions</h2>
+            <ul class="related-conditions-list">
+              {relatedConditions.map((entry) => (
+                <li>
+                  <a href={`/conditions/${entry.slug}`}>{entry.label}</a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <LocalServiceArea />
+  <Footer />
+</BaseLayout>
+
+<style>
+  .condition-hero {
+    border-top: none;
+    padding-bottom: 20px;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(107, 95, 211, 0.1), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(43, 182, 115, 0.1), transparent 42%),
+      #f8f9fb;
+  }
+
+  .condition-heading {
+    max-width: 860px;
+  }
+
+  .condition-label {
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-purple);
+  }
+
+  .condition-hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+  }
+
+  .condition-tagline {
+    margin: 0;
+    max-width: 760px;
+    color: #374151;
+    font-size: clamp(1.04rem, 2vw, 1.3rem);
+  }
+
+  .condition-content {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .condition-card {
+    margin-bottom: 24px;
+    padding: 28px;
+  }
+
+  .condition-card:last-child {
+    margin-bottom: 0;
+  }
+
+  .condition-card h2 {
+    margin-bottom: 14px;
+  }
+
+  .condition-card p {
+    margin: 0 0 12px;
+    font-size: 1.03rem;
+    line-height: 1.72;
+  }
+
+  .condition-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .recommended-services {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .condition-bullets {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .condition-bullets li {
+    line-height: 1.55;
+  }
+
+  .recommended-services li {
+    line-height: 1.55;
+  }
+
+  .recommended-services a {
+    color: var(--accent-purple);
+    font-weight: 600;
+  }
+
+  .condition-faq-list {
+    margin-top: 8px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .condition-faq-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #f9fbff;
+    padding: 14px;
+  }
+
+  .condition-faq-item h3 {
+    margin: 0 0 8px;
+    font-size: 1.03rem;
+  }
+
+  .condition-faq-item p {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.62;
+  }
+
+  .condition-cta {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .related-conditions-card {
+    margin-top: 0;
+  }
+
+  .related-conditions-list {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .related-conditions-list li {
+    line-height: 1.55;
+  }
+
+  .related-conditions-list a {
+    color: var(--accent-purple);
+    font-weight: 600;
+  }
+</style>

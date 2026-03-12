@@ -1,0 +1,130 @@
+---
+import { Image } from "astro:assets";
+import { getServiceImageBySlug } from "../data/service-images";
+
+const { title, summary, image, slug } = Astro.props;
+const optimizedImage = getServiceImageBySlug(slug);
+const imageAlt = `${title} treatment at Integrative Health Solutions in Florence SC`;
+---
+
+<a href={`/services/${slug}`} class="service-card">
+  <div class="image">
+    {optimizedImage ? (
+      <Image
+        class="image-media"
+        src={optimizedImage}
+        alt={imageAlt}
+        widths={[320, 480, 720]}
+        sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
+        format="webp"
+        quality={60}
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <img
+        class="image-media"
+        src={image}
+        alt={imageAlt}
+        loading="lazy"
+        decoding="async"
+      />
+    )}
+    <div class="overlay">
+      <h3>{title}</h3>
+      <p>{summary}</p>
+      <span class="learn-more">Learn More &rarr;</span>
+    </div>
+  </div>
+</a>
+
+<style>
+.service-card {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+
+  transition: transform .25s ease, box-shadow .25s ease;
+
+  grid-column: span 1;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.image {
+  height: 240px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-media {
+  height: 100%;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.service-card:hover .image-media {
+  transform: scale(1.05);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  padding: 20px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.86),
+    rgba(0,0,0,.45),
+    rgba(0,0,0,0)
+  );
+
+  width: 100%;
+}
+
+.service-card * {
+  max-width: 100%;
+}
+
+.overlay h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ffffff;
+  -webkit-text-stroke: 0.35px rgba(0, 0, 0, 0.65);
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 10px rgba(0, 0, 0, 0.45);
+}
+
+.overlay p {
+  margin: 6px 0 10px;
+  font-size: .95rem;
+  opacity: .9;
+  max-width: 90%;
+  color: #f6f8ff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+}
+
+.learn-more {
+  font-size: .85rem;
+  opacity: .85;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+}
+</style>

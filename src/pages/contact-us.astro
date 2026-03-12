@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const forms = [
+  {
+    title: "\uD83D\uDC64 New Patient Intake",
+    description: "Complete your full intake paperwork before your first appointment.",
+    href: "/intake/new-patient",
+  },
+  {
+    title: "\uD83D\uDC76 Infant Intake",
+    description: "Submit pediatric intake details for infant appointments.",
+    href: "/intake/infant",
+  },
+  {
+    title: "\uD83E\uDDFE United Healthcare Summary",
+    description: "Provide insurance-specific intake information for United Healthcare.",
+    href: "/intake/uhc",
+  },
+  {
+    title: "\u26A1 VZ8 Consultation Intake",
+    description: "Share your health history for VZ8 consultation planning.",
+    href: "/intake/vz8",
+  },
+  {
+    title: "\u2709 Quick Contact",
+    description: "Send a quick message to our team for scheduling or general questions.",
+    href: "/intake/contact",
+  },
+];
+---
+<BaseLayout title="Contact Us | Best Florence Chiropractor" description="Contact Us page.">
+<Header />
+<main class="container">
+  <section class="section section-accent">
+    <div class="card intake-hero">
+      <h1>Start Your Visit</h1>
+      <p class="muted">Please complete the appropriate form below before your appointment.</p>
+    </div>
+
+    <div class="intake-grid">
+      {forms.map((form) => (
+        <div class="card intake-card">
+          <h2>{form.title}</h2>
+          <p class="muted">{form.description}</p>
+          <a class="btn btn-primary" href={form.href}>Open Form</a>
+        </div>
+      ))}
+    </div>
+  </section>
+</main>
+<Footer />
+</BaseLayout>

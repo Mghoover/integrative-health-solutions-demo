@@ -1,0 +1,16 @@
+{
+  "name": "bestflorencechiropractor-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "fetch:reviews": "node scripts/fetch-google-reviews.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^4.5.0",
+    "dotenv": "^16.4.5"
+  }
+}

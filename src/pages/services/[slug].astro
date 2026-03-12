@@ -1,0 +1,217 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ServiceDetailLayout from "../../layouts/ServiceDetailLayout.astro";
+import conditions from "../../data/conditions/index";
+import { serviceDetails, serviceDetailsBySlug } from "../../data/service-details";
+import { getServiceImageBySlug } from "../../data/service-images";
+import type { ServiceDetail } from "../../types/service-detail";
+import type { ConditionDetail } from "../../types/condition-detail";
+
+export async function getStaticPaths() {
+  const configuredSlugs = new Set(serviceDetails.map((service) => service.slug));
+  const legacyServices = await getCollection("services");
+  const legacyPaths = legacyServices
+    .filter((service) => !configuredSlugs.has(service.data.slug))
+    .map((service) => ({
+      params: { slug: service.data.slug },
+      props: { legacyService: service }
+    }));
+
+  const configuredPaths = serviceDetails.map((service) => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+
+  return [...configuredPaths, ...legacyPaths];
+}
+
+const { service, legacyService } = Astro.props as {
+  service?: ServiceDetail;
+  legacyService?: CollectionEntry<"services">;
+};
+type LegacyRendered = Awaited<ReturnType<CollectionEntry<"services">["render"]>>;
+
+const selectedConfiguredService =
+  service ?? serviceDetailsBySlug.get(Astro.params.slug ?? "");
+
+const selectedLegacyService =
+  legacyService ?? (selectedConfiguredService ? undefined : null);
+const legacyOptimizedImage = selectedLegacyService
+  ? getServiceImageBySlug(selectedLegacyService.data.slug)
+  : undefined;
+const relatedConditions = (conditions as ConditionDetail[]).slice(0, 5);
+
+let LegacyContent: LegacyRendered["Content"] | null = null;
+
+if (selectedLegacyService) {
+  const renderedLegacy = await selectedLegacyService.render();
+  LegacyContent = renderedLegacy.Content;
+}
+---
+
+{selectedConfiguredService ? (
+  <ServiceDetailLayout service={selectedConfiguredService} relatedConditions={relatedConditions} />
+) : selectedLegacyService && LegacyContent ? (
+  <Layout title={selectedLegacyService.data.title} description={selectedLegacyService.data.summary}>
+    <Header />
+
+    <section class="service-hero">
+      <div class="hero-image">
+        {legacyOptimizedImage ? (
+          <Image
+            class="hero-media"
+            src={legacyOptimizedImage}
+            alt={`${selectedLegacyService.data.title} treatment at Integrative Health Solutions in Florence SC`}
+            widths={[800, 1200, 1600]}
+            sizes="100vw"
+            format="webp"
+            quality={56}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        ) : (
+          <img
+            class="hero-media"
+            src={selectedLegacyService.data.image}
+            alt={`${selectedLegacyService.data.title} treatment at Integrative Health Solutions in Florence SC`}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        )}
+      </div>
+
+      <div class="hero-content">
+        <h1>{selectedLegacyService.data.title}</h1>
+      </div>
+    </section>
+
+    <section class="service-content container">
+      <article>
+        <LegacyContent />
+      </article>
+    </section>
+
+    <section class="related-conditions section container">
+      <h2>Conditions That May Benefit</h2>
+      <p>
+        Many of our services are used to support patients experiencing specific
+        musculoskeletal or neurological symptoms.
+      </p>
+      <div class="conditions-grid">
+        {relatedConditions.map((condition) => (
+          <a href={`/conditions/${condition.slug}`} class="condition-link">
+            <h3>{condition.title}</h3>
+            <p>{condition.heroTagline}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <Footer />
+  </Layout>
+) : null}
+
+<style>
+  .service-hero {
+    position: relative;
+    height: 320px;
+    overflow: hidden;
+  }
+
+  .hero-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 30px;
+    left: 40px;
+    color: white;
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .service-content {
+    max-width: 800px;
+    margin: 60px auto;
+    line-height: 1.7;
+    font-size: 1.1rem;
+  }
+
+  .related-conditions {
+    max-width: 1100px;
+    margin-top: 0;
+    margin-bottom: 52px;
+  }
+
+  .related-conditions h2 {
+    margin-bottom: 8px;
+  }
+
+  .related-conditions > p {
+    margin: 0 0 18px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 820px;
+  }
+
+  .conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .condition-link {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 18px;
+    text-decoration: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .condition-link:hover {
+    border-color: var(--accent-purple);
+    box-shadow: 0 8px 24px rgba(107, 95, 211, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .condition-link h3 {
+    margin: 0 0 8px;
+    color: #111827;
+    font-size: 1.08rem;
+  }
+
+  .condition-link p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.58;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 980px) {
+    .conditions-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .conditions-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

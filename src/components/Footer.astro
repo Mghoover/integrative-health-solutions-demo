@@ -1,0 +1,14 @@
+---
+import { branding } from "../config/branding";
+---
+<footer>
+  <div class="container">
+    <p>&copy; {new Date().getFullYear()} {branding.clinicName}</p>
+    <a href="/privacy-policy/">Privacy Policy</a>
+    <p class="muted" style="font-size: 12px; margin-top: 10px; font-weight: 400;">
+      <a href={branding.ordinisCredit.url} target="_blank" rel="noopener noreferrer">
+        {branding.ordinisCredit.text}
+      </a>
+    </p>
+  </div>
+</footer>

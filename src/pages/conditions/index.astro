@@ -1,0 +1,204 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import conditions from "../../data/conditions/index";
+import type { ConditionDetail } from "../../types/condition-detail";
+
+const seoTitle = "Conditions Treated in Florence SC";
+const seoDescription =
+  "Common conditions treated in Florence SC including back pain, neck pain, whiplash, neuropathy, and headaches.";
+const canonicalUrl = "https://bestflorencechiro.com/conditions";
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://bestflorencechiro.com"
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Conditions",
+      item: canonicalUrl
+    }
+  ]
+};
+
+const conditionCards = conditions as ConditionDetail[];
+---
+
+<BaseLayout title={seoTitle} description={seoDescription}>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={`${seoTitle} | Integrative Health Solutions`} />
+    <meta property="og:description" content={seoDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <Header />
+
+  <main class="container">
+    <section class="section conditions-hero">
+      <div class="conditions-heading">
+        <p class="conditions-label">Conditions Hub</p>
+        <h1>Conditions We Treat</h1>
+        <p class="conditions-tagline">
+          Helping Patients Find Relief From Common Conditions
+        </p>
+        <p class="conditions-intro">
+          Our providers evaluate a variety of musculoskeletal and neurological concerns including
+          back pain, headaches, nerve symptoms, and injury-related conditions.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="conditions-grid">
+        {conditionCards.map((condition) => (
+          <a href={`/conditions/${condition.slug}`} class="card condition-card">
+            <h2>{condition.title}</h2>
+            <p>{condition.heroTagline}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <aside class="cta-banner conditions-cta" aria-label="Schedule Consultation">
+          <div class="cta-content">
+            <h2>Not Sure What Is Causing Your Pain?</h2>
+            <p>
+              Our providers can evaluate your symptoms and recommend appropriate care.
+            </p>
+            <a href="/contact-us/" class="btn btn-primary">Schedule Consultation</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section conditions-local-authority">
+      <div class="container">
+        <p>
+          We provide chiropractic and wellness services to patients in Florence, South Carolina and
+          surrounding communities including Darlington, Hartsville, Timmonsville, and Marion.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .conditions-hero {
+    border-top: none;
+    padding-bottom: 18px;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(107, 95, 211, 0.1), transparent 45%),
+      radial-gradient(circle at 85% 10%, rgba(43, 182, 115, 0.1), transparent 42%),
+      #f8f9fb;
+  }
+
+  .conditions-heading {
+    max-width: 860px;
+  }
+
+  .conditions-label {
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-purple);
+  }
+
+  .conditions-hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+  }
+
+  .conditions-tagline {
+    margin: 0 0 12px;
+    max-width: 760px;
+    color: #374151;
+    font-size: clamp(1.04rem, 2vw, 1.3rem);
+  }
+
+  .conditions-intro {
+    margin: 0;
+    max-width: 860px;
+    font-size: 1.03rem;
+    line-height: 1.72;
+  }
+
+  .conditions-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .condition-card {
+    display: block;
+    padding: 24px;
+    text-decoration: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .condition-card:hover {
+    border-color: var(--accent-purple);
+    box-shadow: 0 8px 24px rgba(107, 95, 211, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .condition-card h2 {
+    margin: 0 0 10px;
+    font-size: 1.34rem;
+    color: #111827;
+  }
+
+  .condition-card p {
+    margin: 0;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  .conditions-cta {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .conditions-local-authority {
+    padding-top: 18px;
+    padding-bottom: 28px;
+    background: #f7f8fb;
+  }
+
+  .conditions-local-authority p {
+    margin: 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 1000px) {
+    .conditions-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .conditions-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

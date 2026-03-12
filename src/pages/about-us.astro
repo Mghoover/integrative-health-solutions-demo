@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { pages } from "../content/pages";
+import { people } from "../config/people";
+
+const providers = people.filter((person) => person.role === "doctor");
+const staff = people.filter((person) => person.role === "staff");
+
+const toParagraphs = (text = "") =>
+  text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+---
+<BaseLayout title="About Us | Best Florence Chiropractor" description="About Us page.">
+<Header />
+<main>
+  <section class="section">
+    <div class="container">
+      <h1>{pages.about.introTitle}</h1>
+      <div class="card">{toParagraphs(pages.about.introBody).map((paragraph) => <p>{paragraph}</p>)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Providers</h2>
+      {providers.map((person) => (
+        <div class="card doctor-card doctor-row">
+          <div class="doctor-media">
+            <img
+              src={person.image}
+              alt={person.name}
+              class="doctor-headshot doctor-photo"
+              loading="lazy"
+              width="220"
+            />
+          </div>
+
+          <div class="doctor-content doctor-info">
+            <h3>{person.name}</h3>
+
+            <div class="person-title">{person.title}</div>
+
+            <div class="person-role doctor">Provider</div>
+
+            <p>{person.bio}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Staff</h2>
+      {staff.map((person) => (
+        <div class="card doctor-card doctor-row">
+          <div class="doctor-media">
+            <img
+              src={person.image}
+              alt={person.name}
+              class="doctor-headshot doctor-photo"
+              loading="lazy"
+              width="220"
+            />
+          </div>
+
+          <div class="doctor-content doctor-info">
+            <h3>{person.name}</h3>
+
+            <div class="person-title">{person.title}</div>
+
+            <div class="person-role staff">Staff</div>
+
+            <p>{person.bio}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</main>
+<Footer />
+</BaseLayout>
