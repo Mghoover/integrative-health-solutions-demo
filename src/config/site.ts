@@ -15,10 +15,19 @@ export const siteConfig = {
     "/images/newpatientswelcome.jpg",
   ],
   intakeForms: {
-    contact: import.meta.env.JOT_CONTACT_FORM,
-    newPatient: import.meta.env.JOT_NEW_PATIENT_FORM,
-    infant: import.meta.env.JOT_INFANT_FORM,
-    uhc: import.meta.env.JOT_UHC_FORM,
-    vz8: import.meta.env.JOT_VZ8_FORM,
+    contact: "252376106012042",
+    newPatient: "252325538621051",
+    infant: "252516512479056",
+    uhc: "252366034314046",
+    vz8: "252584637466065",
+  },
+  supplementPortals: {
+    fullscript: {
+      url: "https://us.fullscript.com/welcome/doldenkamp",
+    },
+    standardProcess: {
+      url: "https://my.standardprocess.com/Patient-Direct/patient-registration",
+      code: "MANCKB",
+    },
   },
 };

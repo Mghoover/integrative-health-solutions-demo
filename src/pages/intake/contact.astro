@@ -2,8 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { siteConfig } from "../../config/site";
 
-const formId = (import.meta.env.JOT_CONTACT_FORM ?? "").trim();
+const formId = siteConfig.intakeForms.contact.trim();
 ---
 <BaseLayout title="Quick Contact Form | Best Florence Chiropractor" description="Quick contact form.">
 <Header />

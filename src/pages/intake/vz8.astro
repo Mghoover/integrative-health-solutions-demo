@@ -2,8 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { siteConfig } from "../../config/site";
 
-const formId = (import.meta.env.JOT_VZ8_FORM ?? "").trim();
+const formId = siteConfig.intakeForms.vz8.trim();
 ---
 <BaseLayout title="VZ8 Consultation Intake | Best Florence Chiropractor" description="VZ8 consultation intake form.">
 <Header />

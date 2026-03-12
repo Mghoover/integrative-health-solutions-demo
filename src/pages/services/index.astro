@@ -6,10 +6,11 @@ import { getCollection } from "astro:content";
 import ServiceCard from "../../components/ServiceCard.astro";
 import { pages } from "../../content/pages";
 import { conditions } from "../../config/conditions";
+import { siteConfig } from "../../config/site";
 
-const fullScriptsUrl = (import.meta.env.FULL_SCRIPTS ?? "").trim();
-const standardProcessUrl = (import.meta.env.STD_PROC ?? "").trim();
-const standardProcessCode = (import.meta.env.STD_CODE ?? "").trim();
+const fullScriptsUrl = siteConfig.supplementPortals.fullscript.url.trim();
+const standardProcessUrl = siteConfig.supplementPortals.standardProcess.url.trim();
+const standardProcessCode = siteConfig.supplementPortals.standardProcess.code.trim();
 
 const hasFullScriptsUrl = fullScriptsUrl.length > 0;
 const hasStandardProcessUrl = standardProcessUrl.length > 0;

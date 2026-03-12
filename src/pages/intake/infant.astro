@@ -2,8 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { siteConfig } from "../../config/site";
 
-const formId = (import.meta.env.JOT_INFANT_FORM ?? "").trim();
+const formId = siteConfig.intakeForms.infant.trim();
 ---
 <BaseLayout title="Infant Intake | Best Florence Chiropractor" description="Infant intake form.">
 <Header />
