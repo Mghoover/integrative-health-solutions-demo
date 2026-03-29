@@ -1,6 +1,7 @@
 ---
 const { title, description } = Astro.props;
 import { branding } from "../config/branding";
+import { hub } from "../config/hub";
 import "../styles/global.css";
 ---
 <!doctype html>
@@ -13,6 +14,8 @@ import "../styles/global.css";
   <slot name="head" />
   <link rel="icon" type="image/png" href={branding.favicon} sizes="32x32" />
   <link rel="shortcut icon" href={branding.favicon} />
+  <script is:inline>{`window.ORDINIS_SITE_ID = ${JSON.stringify(hub.siteId)};`}</script>
+  <script src={hub.trackerUrl}></script>
 </head>
 <body>
   <slot />
