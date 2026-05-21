@@ -12,35 +12,110 @@ const toParagraphs = (text = "") =>
     .map((line) => line.trim())
     .filter(Boolean);
 ---
-<BaseLayout title="Best Florence Chiropractor | Florence, SC" description="Chiropractic care in Florence, SC.">
+<BaseLayout
+  title="Brain Restore and Chiropractic Care in Florence SC"
+  description="Brain Restore programs, hyperbaric oxygen therapy guidance, neurological wellness support, and chiropractic care at Integrative Health Solutions in Florence, SC."
+  canonicalPath="/"
+>
 <Header />
-<main class="container">
+<main>
   <HeroSlider />
 
-  <section class="section">
-    <div class="card">
-      <h2>{pages.home.welcomeTitle}</h2>
-      {toParagraphs(pages.home.welcomeBody).map((paragraph) => <p>{paragraph}</p>)}
+  <section class="section home-intro">
+    <div class="container home-intro-grid">
+      <div>
+        <p class="section-label">Brain Restore + Chiropractic</p>
+        <h2>{pages.home.welcomeTitle}</h2>
+        {toParagraphs(pages.home.welcomeBody).map((paragraph) => <p>{paragraph}</p>)}
+        <div class="inline-actions">
+          <a class="btn btn-primary" href="/brain-restore/">Explore Brain Restore</a>
+          <a class="btn btn-secondary" href="/services/hbot/">Learn About HBOT</a>
+        </div>
+      </div>
+      <aside class="signal-panel" aria-label="Brain Restore care pillars">
+        <div>
+          <span>01</span>
+          <strong>Measured Evaluation</strong>
+          <p>We begin by listening, examining, and identifying the systems most relevant to your goals.</p>
+        </div>
+        <div>
+          <span>02</span>
+          <strong>Nervous System Support</strong>
+          <p>Care may include chiropractic, neurological wellness strategies, nutrition, laser, and recovery therapies.</p>
+        </div>
+        <div>
+          <span>03</span>
+          <strong>Recovery Planning</strong>
+          <p>Your plan is built around safety, realistic expectations, and the next most useful clinical step.</p>
+        </div>
+      </aside>
     </div>
-    <div class="card">
-      <h2>Who We Are</h2>
-      {toParagraphs(pages.home.whoWeAre).map((paragraph) => <p>{paragraph}</p>)}
+  </section>
+
+  <section class="section restore-band">
+    <div class="container restore-grid">
+      <div>
+        <p class="section-label">Flagship Focus</p>
+        <h2>Brain Restore for Patients Who Need a Deeper Look</h2>
+        <p>
+          Brain Restore is our forward-looking care model for cognitive, neurological,
+          nerve-related, and post-injury recovery concerns. It brings together objective
+          evaluation, nervous system support, and therapies selected for the individual.
+        </p>
+      </div>
+      <div class="restore-list">
+        <a href="/brain-restore/">Brain Restore overview</a>
+        <a href="/services/brain-health/">Brain health programs</a>
+        <a href="/services/hbot/">Hyperbaric oxygen therapy</a>
+        <a href="/conditions/neuropathy/">Neuropathy support</a>
+      </div>
     </div>
-    <div class="card">
-      <h2>Mission Statement</h2>
-      {toParagraphs(pages.home.missionStatement).map((paragraph) => <p>{paragraph}</p>)}
+  </section>
+
+  <section class="section symptom-pathways">
+    <div class="container">
+      <p class="section-label">Common Patterns</p>
+      <h2>Support for symptoms that do not always fit a simple explanation</h2>
+      <p>
+        Many patients arrive after years of frustration. The symptoms are real,
+        even when conventional testing does not fully explain functional neurological
+        disruption.
+      </p>
+      <div class="pathway-grid">
+        <a href="/conditions/brain-fog/">Brain Fog</a>
+        <a href="/conditions/post-concussion-symptoms/">Post-Concussion Symptoms</a>
+        <a href="/conditions/cognitive-fatigue/">Cognitive Fatigue</a>
+        <a href="/conditions/dizziness-balance-problems/">Dizziness & Balance</a>
+        <a href="/conditions/nervous-system-dysregulation/">Nervous System Dysregulation</a>
+        <a href="/conditions/neuropathy/">Neuropathy Support</a>
+        <a href="/conditions/headaches/">Headaches & Migraines</a>
+      </div>
     </div>
-    <div class="card">
-      <h2>Vision Statement</h2>
-      {toParagraphs(pages.home.visionStatement).map((paragraph) => <p>{paragraph}</p>)}
+  </section>
+
+  <section class="section clinic-foundation">
+    <div class="container foundation-grid">
+      <article>
+        <h2>Who We Are</h2>
+        {toParagraphs(pages.home.whoWeAre).map((paragraph) => <p>{paragraph}</p>)}
+      </article>
+      <article>
+        <h2>Mission</h2>
+        {toParagraphs(pages.home.missionStatement).map((paragraph) => <p>{paragraph}</p>)}
+      </article>
+      <article>
+        <h2>Vision</h2>
+        {toParagraphs(pages.home.visionStatement).map((paragraph) => <p>{paragraph}</p>)}
+      </article>
     </div>
   </section>
 
   <section class="section conditions-preview">
-    <h2>Conditions We Treat</h2>
+    <div class="container">
+    <h2>Conditions We Support</h2>
     <p>
-      Our clinic works with patients experiencing a wide range of
-      musculoskeletal and neurological conditions.
+      Our clinic works with patients experiencing musculoskeletal, neurological,
+      nerve-related, and recovery-focused concerns.
     </p>
 
     <div class="conditions-grid">
@@ -55,22 +130,200 @@ const toParagraphs = (text = "") =>
     <a class="view-all-conditions" href="/conditions">
       View All Conditions &rarr;
     </a>
+    </div>
   </section>
 </main>
 <Footer />
 </BaseLayout>
 
 <style>
+  .home-intro {
+    background: #ffffff;
+  }
+
+  .home-intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    gap: 36px;
+    align-items: start;
+  }
+
+  .section-label {
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--accent-purple);
+  }
+
+  .home-intro h2,
+  .restore-band h2 {
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .home-intro p,
+  .restore-band p,
+  .clinic-foundation p {
+    color: #3f4a5f;
+    font-size: 1.03rem;
+    line-height: 1.75;
+  }
+
+  .inline-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .signal-panel {
+    display: grid;
+    gap: 14px;
+    padding: 24px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #0d1726, #17243a);
+    color: #ffffff;
+    box-shadow: 0 20px 50px rgba(13, 23, 38, 0.18);
+  }
+
+  .signal-panel div {
+    padding: 0 0 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .signal-panel div:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .signal-panel span {
+    display: block;
+    margin-bottom: 6px;
+    color: #9ae6c5;
+    font-weight: 800;
+    font-size: 0.78rem;
+  }
+
+  .signal-panel strong {
+    display: block;
+    color: #ffffff;
+    font-size: 1.08rem;
+  }
+
+  .signal-panel p {
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.95rem;
+    line-height: 1.62;
+  }
+
+  .restore-band {
+    background:
+      radial-gradient(circle at 18% 18%, rgba(37, 99, 235, 0.16), transparent 32%),
+      linear-gradient(135deg, #eef6ff, #f8fbff);
+  }
+
+  .restore-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 34px;
+    align-items: center;
+  }
+
+  .restore-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .restore-list a {
+    display: block;
+    padding: 15px 16px;
+    border: 1px solid #dbe7ff;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.74);
+    color: #10213a;
+    font-weight: 700;
+  }
+
+  .clinic-foundation {
+    background: #ffffff;
+  }
+
+  .symptom-pathways {
+    background:
+      linear-gradient(135deg, rgba(7, 17, 31, 0.96), rgba(16, 35, 64, 0.9)),
+      url("/images/neuro/brain-imaging-pexels-cottonbro.jpg") center / cover;
+    color: #ffffff;
+  }
+
+  .symptom-pathways h2 {
+    max-width: 860px;
+    color: #ffffff;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .symptom-pathways .container > p:not(.section-label) {
+    max-width: 760px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.06rem;
+    line-height: 1.72;
+  }
+
+  .symptom-pathways .section-label {
+    color: #9ae6c5;
+  }
+
+  .pathway-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .pathway-grid a {
+    display: block;
+    min-height: 88px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-weight: 800;
+    backdrop-filter: blur(8px);
+    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+  }
+
+  .pathway-grid a:hover {
+    transform: translateY(-3px);
+    border-color: rgba(154, 230, 197, 0.68);
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .foundation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .foundation-grid article {
+    border-top: 3px solid var(--accent-green);
+    padding-top: 18px;
+  }
+
   .conditions-preview {
-    max-width: 1100px;
-    margin: 0 auto 26px;
+    margin: 0 0 26px;
   }
 
   .conditions-preview h2 {
     margin-bottom: 8px;
   }
 
-  .conditions-preview > p {
+  .conditions-preview .container > p {
     margin: 0 0 18px;
     color: var(--muted);
     line-height: 1.65;
@@ -120,6 +373,13 @@ const toParagraphs = (text = "") =>
   }
 
   @media (max-width: 1000px) {
+    .home-intro-grid,
+    .restore-grid,
+    .foundation-grid,
+    .pathway-grid {
+      grid-template-columns: 1fr;
+    }
+
     .conditions-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }

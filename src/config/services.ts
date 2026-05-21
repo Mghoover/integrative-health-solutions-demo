@@ -1,12 +1,12 @@
 export const primaryServices = [
-  { icon: "⚕", title: "Chiropractic Care" },
-  { icon: "🧠", title: "Neuropathy Treatment" },
-  { icon: "🔬", title: "Low Level Laser Therapy" },
-  { icon: "🌿", title: "Nutritional Support" },
-  { icon: "⚡", title: "Body Contouring (VZ8)" },
-  { icon: "🚗", title: "Auto Accident Care" },
-  { icon: "🫧", title: "HBOT Therapy" },
-  { icon: "🧠", title: "Brain Health" },
+  { icon: "BR", title: "Brain Restore" },
+  { icon: "O2", title: "Hyperbaric Oxygen Therapy" },
+  { icon: "NS", title: "Brain Health Programs" },
+  { icon: "DC", title: "Chiropractic Care" },
+  { icon: "LL", title: "Low Level Laser Therapy" },
+  { icon: "NC", title: "Nutritional Support" },
+  { icon: "PI", title: "Auto Accident Care" },
+  { icon: "VZ", title: "Body Contouring (VZ8)" },
 ];
 
 export const additionalServices = [

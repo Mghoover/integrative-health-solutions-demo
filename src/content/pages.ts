@@ -3,38 +3,38 @@ export const pages = {
     heroSlides: [
       {
         kicker: "Chiropractic Care in Florence, SC",
-        title: "Get Healthy, Stay Healthy",
-        body: "PASTE exact first hero slide paragraph here"
+        title: "Brain Restore and Nervous System Recovery",
+        body: "Advanced care for patients who want a more objective look at brain health, nerve function, movement, and recovery."
       },
       {
-        kicker: "Focused Care",
-        title: "Relief + Mobility Support",
-        body: "PASTE second slide paragraph here"
+        kicker: "Hyperbaric Oxygen Therapy",
+        title: "Recovery Support With HBOT",
+        body: "Pressurized oxygen therapy, careful screening, and conservative clinical guidance for selected recovery and wellness goals."
       },
       {
         kicker: "New Patients Welcome",
-        title: "Start Your First Visit",
-        body: "PASTE third slide paragraph here"
+        title: "Start With an Evaluation",
+        body: "Begin with a measured, patient-centered visit designed to understand your symptoms, goals, and next best steps."
       }
     ],
 
-    welcomeTitle: "Helping You Keep Your Health in Check",
+    welcomeTitle: "Advanced Brain Restore Care in Florence, SC",
     welcomeBody: `
-      Health is your most precious commodity, keeping your health a top priority will offset your risk for multiple conditions and diseases. You only get one body and we are here to help you make it the best it can be.
+      Integrative Health Solutions is evolving into a Brain Restore-forward clinic for patients who want a deeper, more measured approach to neurological wellness, recovery, and long-term resilience.
 
-We employ a multimodal, poly-therapeutic approach to well-being. Our clients can choose from our comprehensive list of services to find one that addresses their health needs. Whether you need conventional chiropractic adjustment, brain-based therapies, low level laser, dry needling, weight loss, nutritional counseling, etc. you can rely on us to provide you with exceptional results.
+Our care model still includes trusted chiropractic care, but it now places greater emphasis on the brain and nervous system. We combine evaluation, brain health support, recovery-focused therapies, nutrition, laser therapy, and planned HBOT services with conservative, patient-specific guidance.
     `,
 
     whoWeAre: `
-      Integrative Health Solutions launched in August 2020. We are a clinic that provides a variety of services that aim to enhance and maintain your well-being. Our team of health care experts has over 40 years of combined experience. Rest assured, you'll be in safe and competent hands when you choose us.
+      Integrative Health Solutions launched in August 2020 to bring a more complete model of care to Florence. Our team looks at how spinal health, neurological function, metabolic health, and lifestyle patterns interact, then builds care plans around the person in front of us.
     `,
 
     missionStatement: `
-      Our team is committed to ensuring optimal health for both young and adult patients through a multimodal, poly-therapeutic approach to health care.
+      Our team is committed to helping patients pursue better function, clearer understanding, and more resilient health through a multimodal approach to brain, body, and nervous system care.
     `,
 
     visionStatement: `
-     We want our clients to engage in a lifelong commitment to their health and to learn how to be mindful of their bodies' needs. With our help, clients develop new health perspectives and pursue optimized living to live amazing lives.
+     We want patients to move from uncertainty to clarity. With the right evaluation, education, and support, patients can make more informed decisions about recovery, neurological wellness, and long-term health.
     `
   },
 
@@ -73,16 +73,16 @@ Matthew is passionate about helping patients feel welcomed, supported, and confi
 
   services: {
     intro: `
-      You Only Get One Body, Take Care of It
-Here at Integrative Health Solutions, we actively engage our clients in conversations of the health goals they pursue. We want to empower our clients with information using our expertise to put them in the driver's seat. We will provide information and support the decision-making process and use our expertise to give the best care plan possible.
+      Advanced Care for the Brain, Body, and Nervous System
+At Integrative Health Solutions, care begins with listening, evaluation, and a clear discussion of the health goals you are pursuing. We want patients to understand their options and participate in decisions about their care.
 
-The nervous system controls all bodily functions, and our services will upregulate normal adaptive physiology in the body. The brain has a muscular map of all the patterns that keep the body upright even when the skeleton is off balance. We will help the brain remap the muscle patterns on the new level foundation, so the body functions better.
+The nervous system influences movement, pain processing, balance, cognition, and recovery. Our services are designed to support better function through chiropractic care, brain health programs, laser therapy, nutrition, dry needling, and planned hyperbaric oxygen therapy.
 
-If you are out of balance, feeling sluggish, have brain fog, or you just don't feel as good as you did 5 or 10 years ago, there may be a number of body systems that need a reboot. We can help you achieve wellness with the treatments we offer.
+If you are dealing with nerve symptoms, brain fog, headaches, post-injury recovery, reduced mobility, or a sense that your system is not adapting well, our team can help you explore conservative care options.
     `,
 
     servicesList: [
-      "Chriopractic Treatment",
+      "Chiropractic Treatment",
       "Brain-Based Chiropractic",
       "Dry Needling",
       "Functional Medicine",
@@ -102,26 +102,26 @@ If you are out of balance, feeling sluggish, have brain fog, or you just don't f
 
   reviews: {
     intro: `
-      PASTE the intro paragraph from Reviews & Updates page.
+      Read recent patient feedback and clinic updates from Integrative Health Solutions in Florence, SC.
     `,
 
     testimonials: [
       {
-        author: "Patient Name",
+        author: "Google Review",
         text: `
-          PASTE first testimonial exactly.
+          Patient reviews are pulled from the clinic's Google profile when review data is refreshed.
         `
       },
       {
-        author: "Patient Name",
+        author: "Google Review",
         text: `
-          PASTE second testimonial.
+          Our reviews page highlights recent patient experiences and links to the full Google listing.
         `
       }
     ],
 
     updatesSection: `
-      PASTE the Updates Coming Soon or similar section text.
+      Clinic updates will be added here as new services, hours, and patient resources become available.
     `
   },
 

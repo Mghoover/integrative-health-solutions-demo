@@ -1,9 +1,9 @@
 ---
-title: "HBOT Therapy"
+title: "Hyperbaric Oxygen Therapy"
 slug: "hbot"
-summary: "Hyperbaric oxygen therapy to promote tissue repair and recovery."
+summary: "Pressurized oxygen therapy for selected recovery, brain health, and wellness support."
 image: "/images/services/hbot.jpg"
 category: "primary"
 ---
 
-HBOT delivers concentrated oxygen in a pressurized chamber to accelerate healing and cellular repair.
+HBOT delivers concentrated oxygen in a pressurized chamber and is discussed as part of an evidence-aware recovery strategy.

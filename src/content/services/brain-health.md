@@ -1,9 +1,9 @@
 ---
-title: "Brain Health"
+title: "Brain Restore & Brain Health"
 slug: "brain-health"
-summary: "Comprehensive programs designed to support cognitive function and neurological health."
+summary: "Neurological wellness programs for cognitive function, resilience, and recovery support."
 image: "/images/services/brain-health.jpg"
 category: "primary"
 ---
 
-Brain health programs focus on cognitive testing, neurological rehabilitation, and lifestyle strategies.
+Brain Restore and brain health programs focus on neurological wellness, objective evaluation, and supportive recovery strategies.

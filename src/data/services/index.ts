@@ -12,14 +12,14 @@ export interface ServiceLinkItem {
 const modules = import.meta.glob<ServiceModule>("./*.ts", { eager: true });
 
 const preferredOrder = [
+  "brain-health",
+  "hbot",
   "laser-therapy",
   "chiropractic",
   "dry-needling",
   "neuropathy",
   "personal-injury",
   "body-contouring",
-  "brain-health",
-  "hbot",
   "nutrition",
   "nutritional-consulting",
   "nir-sauna"

@@ -5,6 +5,7 @@ import Footer from "../../components/Footer.astro";
 import LocalServiceArea from "../../components/LocalServiceArea.astro";
 import { conditionEntries } from "../../data/conditions";
 import { serviceLinks } from "../../data/services";
+import { siteConfig } from "../../config/site";
 import type { ConditionDetail } from "../../types/condition-detail";
 
 export function getStaticPaths() {
@@ -42,7 +43,7 @@ const possibleCauseItems =
         "Overuse-related tissue irritation"
       ];
 const seoTitle = `${condition.title} in Florence SC`;
-const canonicalUrl = `https://bestflorencechiro.com/conditions/${condition.slug}`;
+const canonicalUrl = `${siteConfig.siteUrl}/conditions/${condition.slug}`;
 const ctaTitle = condition.cta?.title ?? "Schedule a Consultation";
 const ctaDescription =
   condition.cta?.description ??
@@ -57,13 +58,13 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://bestflorencechiro.com"
+      item: siteConfig.siteUrl
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "Conditions",
-      item: "https://bestflorencechiro.com/conditions"
+      item: `${siteConfig.siteUrl}/conditions`
     },
     {
       "@type": "ListItem",
@@ -73,6 +74,11 @@ const breadcrumbSchema = {
   ]
 };
 const relatedConditionOrder = [
+  { slug: "brain-fog", label: "Brain Fog" },
+  { slug: "post-concussion-symptoms", label: "Post-Concussion Symptoms" },
+  { slug: "cognitive-fatigue", label: "Cognitive Fatigue" },
+  { slug: "dizziness-balance-problems", label: "Dizziness & Balance Problems" },
+  { slug: "nervous-system-dysregulation", label: "Nervous System Dysregulation" },
   { slug: "back-pain", label: "Back Pain" },
   { slug: "neck-pain", label: "Neck Pain" },
   { slug: "whiplash", label: "Whiplash" },
@@ -100,29 +106,24 @@ const faqSchema =
     : null;
 ---
 
-<BaseLayout title={seoTitle} description={condition.heroTagline}>
+<BaseLayout title={seoTitle} description={condition.heroTagline} canonicalPath={`/conditions/${condition.slug}/`}>
   <Fragment slot="head">
-    <link rel="canonical" href={canonicalUrl} />
-    <meta property="og:title" content={`${seoTitle} | Integrative Health Solutions`} />
-    <meta property="og:description" content={condition.heroTagline} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
   </Fragment>
 
   <Header />
 
-  <main class="container">
+  <main>
     <section class="section condition-hero">
-      <div class="condition-heading">
-        <p class="condition-label">Condition Page</p>
+      <div class="container condition-heading">
+        <p class="condition-label">Condition Support</p>
         <h1>{condition.title}</h1>
         <p class="condition-tagline">{condition.heroTagline}</p>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section condition-main-section">
       <div class="condition-content">
         <article class="card condition-card">
           <h2>Overview</h2>
@@ -130,6 +131,22 @@ const faqSchema =
             <p>{paragraph}</p>
           ))}
         </article>
+
+        {condition.sections && condition.sections.length > 0 && (
+          <div class="condition-deep-dive">
+            {condition.sections.map((section) => (
+              <article class="card condition-card">
+                <h2>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+                {section.bulletPoints && section.bulletPoints.length > 0 && (
+                  <ul class="condition-bullets">
+                    {section.bulletPoints.map((point) => <li>{point}</li>)}
+                  </ul>
+                )}
+              </article>
+            ))}
+          </div>
+        )}
 
         <article class="card condition-card">
           <h2>Common Symptoms</h2>
@@ -213,11 +230,10 @@ const faqSchema =
 <style>
   .condition-hero {
     border-top: none;
-    padding-bottom: 20px;
+    padding: 82px 0 58px;
     background:
-      radial-gradient(circle at 15% 20%, rgba(107, 95, 211, 0.1), transparent 45%),
-      radial-gradient(circle at 85% 10%, rgba(43, 182, 115, 0.1), transparent 42%),
-      #f8f9fb;
+      linear-gradient(110deg, rgba(8, 18, 34, 0.92), rgba(18, 34, 58, 0.82)),
+      url("/images/neuro/brain-imaging-pexels-cottonbro.jpg") center / cover;
   }
 
   .condition-heading {
@@ -230,19 +246,29 @@ const faqSchema =
     letter-spacing: 0.08em;
     font-size: 0.78rem;
     font-weight: 700;
-    color: var(--accent-purple);
+    color: #9ae6c5;
   }
 
   .condition-hero h1 {
     margin: 0 0 10px;
-    font-size: clamp(2rem, 3.2vw, 2.8rem);
+    color: #ffffff;
+    font-size: clamp(2.5rem, 5vw, 4.4rem);
+    line-height: 1.04;
+    letter-spacing: 0;
   }
 
   .condition-tagline {
     margin: 0;
     max-width: 760px;
-    color: #374151;
+    color: rgba(255, 255, 255, 0.86);
     font-size: clamp(1.04rem, 2vw, 1.3rem);
+    line-height: 1.65;
+  }
+
+  .condition-main-section {
+    background:
+      radial-gradient(circle at 12% 8%, rgba(37, 99, 235, 0.08), transparent 30%),
+      #f6f8fb;
   }
 
   .condition-content {

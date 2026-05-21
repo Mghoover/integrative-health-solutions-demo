@@ -8,7 +8,7 @@ import { branding } from "../config/branding";
     <a href="/" class="site-brand" aria-label={`${branding.clinicName} home`}>
       <img class="site-logo" src={branding.logo} alt={branding.clinicName} />
     </a>
-    <nav>
+    <nav aria-label="Primary navigation">
       {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
     </nav>
   </div>

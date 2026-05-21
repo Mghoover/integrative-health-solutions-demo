@@ -3,8 +3,8 @@ export const branding = {
   logo: "/images/ihs-log.jpg",
   favicon: "/images/favicon.png",
   colors: {
-    primary: "#6b5fd3",
-    accent: "#2bb673",
+    primary: "#122033",
+    accent: "#34d399",
   },
   ordinisCredit: {
     text: "Website powered by Ordinis Technologies",

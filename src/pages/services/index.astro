@@ -16,7 +16,7 @@ const hasFullScriptsUrl = fullScriptsUrl.length > 0;
 const hasStandardProcessUrl = standardProcessUrl.length > 0;
 const hasStandardProcessCode = standardProcessCode.length > 0;
 const services = await getCollection("services");
-const heroServiceSlugs = ["chiropractic", "laser-therapy", "body-contouring"];
+const heroServiceSlugs = ["brain-health", "hbot", "chiropractic"];
 const heroServiceOrder = new Map(heroServiceSlugs.map((slug, index) => [slug, index]));
 const primary = services
   .filter((service) => service.data.category?.toLowerCase() === "primary")
@@ -37,16 +37,32 @@ const toParagraphs = (text = "") =>
     .map((line) => line.trim())
     .filter(Boolean);
 ---
-<BaseLayout title="Services | Best Florence Chiropractor" description="Services page.">
+<BaseLayout
+  title="Brain Restore, HBOT, and Chiropractic Services in Florence SC"
+  description="Explore Brain Restore, hyperbaric oxygen therapy, brain health programs, chiropractic care, laser therapy, nutrition, and recovery services at Integrative Health Solutions in Florence, SC."
+  canonicalPath="/services/"
+>
 <Header />
 <main class="container">
   <section class="section">
-    <h1>Services</h1>
+    <p class="services-label">Advanced Care Services</p>
+    <h1>Brain Restore, HBOT, and Chiropractic Care</h1>
     <div class="card">
       {toParagraphs(pages.services.intro).map((paragraph) => <p>{paragraph}</p>)}
     </div>
+    <div class="brain-restore-feature">
+      <div>
+        <p class="services-label">Flagship Program</p>
+        <h2>Brain Restore</h2>
+        <p>
+          A more advanced path for neurological wellness, cognitive resilience,
+          nerve-related symptoms, and recovery planning.
+        </p>
+      </div>
+      <a class="btn btn-primary" href="/brain-restore/">Learn About Brain Restore</a>
+    </div>
     <div class="services">
-      <h2>Primary Services</h2>
+      <h2>Featured Services</h2>
       <div class="services-grid">
         {primary.map((service) => (
           <ServiceCard
@@ -167,7 +183,7 @@ const toParagraphs = (text = "") =>
   <section class="trust-band">
     <div class="container">
       <p>
-        Trusted chiropractic and wellness care serving the Florence community.
+        Advanced Brain Restore, neurological wellness, and chiropractic care serving the Florence community.
       </p>
     </div>
   </section>
@@ -184,6 +200,42 @@ const toParagraphs = (text = "") =>
     margin-top: 40px;
     margin-bottom: 12px;
     font-size: 1.6rem;
+  }
+
+  .services-label {
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--accent-purple);
+  }
+
+  .brain-restore-feature {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: center;
+    margin: 28px auto 0;
+    max-width: 1100px;
+    padding: 26px;
+    border-radius: 16px;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(36, 180, 126, 0.18), transparent 34%),
+      linear-gradient(135deg, #0d1726, #17243a);
+    color: #ffffff;
+  }
+
+  .brain-restore-feature h2 {
+    margin: 0 0 8px;
+    color: #ffffff;
+  }
+
+  .brain-restore-feature p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.65;
+    max-width: 680px;
   }
 
   .services h1 {
@@ -224,6 +276,11 @@ const toParagraphs = (text = "") =>
   @media (max-width: 640px) {
     .services-grid {
       grid-template-columns: 1fr;
+    }
+
+    .brain-restore-feature {
+      align-items: stretch;
+      flex-direction: column;
     }
   }
 

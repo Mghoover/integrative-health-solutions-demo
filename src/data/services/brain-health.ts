@@ -2,21 +2,21 @@ import type { ServiceDetail } from "../../types/service-detail";
 
 export const service: ServiceDetail = {
   slug: "brain-health",
-  title: "Brain Health Programs",
-  heroTagline: "Supporting Cognitive Function and Neurological Wellness",
+  title: "Brain Restore & Brain Health Programs",
+  heroTagline: "Objective Neurological Wellness Support for Cognitive Function, Recovery, and Resilience",
 
   conditions: [
     "headaches",
     "neuropathy"
   ],
   intro: [
-    "Brain health refers to maintaining cognitive function, neurological resilience, and healthy brain physiology throughout life.",
-    "Our brain health programs focus on lifestyle factors, neurological monitoring, and supportive therapies designed to help optimize brain function."
+    "Brain Restore and brain health programs focus on supporting cognitive function, neurological resilience, and healthy brain physiology throughout life.",
+    "Our approach brings together clinical evaluation, neurological wellness strategies, objective monitoring when appropriate, and supportive therapies designed to help patients pursue better function without overpromising outcomes."
   ],
 
   sections: [
     {
-      title: "Factors That Influence Brain Health",
+      title: "Factors That Influence Brain and Nervous System Health",
       paragraphs: [
         "Brain function is influenced by many systems in the body including circulation, sleep, metabolism, and stress regulation.",
         "Long-term brain health is often supported by addressing these underlying factors."
@@ -38,26 +38,27 @@ export const service: ServiceDetail = {
       ]
     },
     {
-      title: "Objective Monitoring",
+      title: "Measurable Evaluation and Monitoring",
       paragraphs: [
         "Some brain health programs incorporate objective assessment tools such as EEG to observe patterns of brain activity.",
-        "EEG may help clinicians monitor changes over time when interpreted within the broader clinical context."
+        "EEG may help clinicians monitor changes over time when interpreted within the broader clinical context. It is one tool, not a guarantee of outcome."
       ]
     },
     {
-      title: "Supportive Strategies",
+      title: "Supportive Brain Restore Strategies",
       paragraphs: [
-        "Brain health programs often combine multiple approaches including lifestyle optimization, rehabilitation strategies, and supportive therapies.",
-        "The goal is to support neurological wellness rather than to promise rapid or guaranteed cognitive change."
+        "Brain Restore programs may combine multiple approaches including lifestyle optimization, rehabilitation strategies, chiropractic care, nutrition, laser therapy, and HBOT discussion when appropriate.",
+        "The goal is to support neurological wellness and recovery capacity rather than to promise rapid or guaranteed cognitive change."
       ]
     }
   ],
 
   cta: {
-    title: "Learn More About Brain Health Programs",
+    title: "Learn More About Brain Restore",
     description:
-      "If you are interested in supporting long-term brain health or learning more about neurological wellness programs, contact our clinic for more information.",
-    buttonText: "Contact Us"
+      "If you are interested in neurological wellness, cognitive resilience, or Brain Restore planning, contact our clinic for a conversation about next steps.",
+    buttonText: "Schedule Evaluation",
+    buttonHref: "/contact-us/"
   }
 };
 

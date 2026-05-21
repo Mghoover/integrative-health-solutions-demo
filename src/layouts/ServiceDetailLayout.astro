@@ -26,20 +26,8 @@ const { service, relatedConditions = [] } = Astro.props as {
   relatedConditions?: ConditionDetail[];
 };
 const ctaHref = service.cta.buttonHref ?? "/contact-us/";
-const canonicalUrl = `https://bestflorencechiro.com/services/${service.slug}`;
-const seoTitle = `${service.title} in Florence SC | Integrative Health Solutions`;
+const seoTitle = `${service.title} in Florence SC`;
 const relatedServices = getRelatedServices(service.slug, 4);
-const medicalBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "MedicalBusiness",
-  name: "Integrative Health Solutions",
-  url: "https://bestflorencechiro.com",
-  medicalSpecialty: "Chiropractic",
-  areaServed: {
-    "@type": "City",
-    name: "Florence"
-  }
-};
 const medicalProcedureSchema = {
   "@context": "https://schema.org",
   "@type": "MedicalProcedure",
@@ -68,16 +56,10 @@ const faqSchema =
     : null;
 ---
 
-<BaseLayout title={seoTitle} description={service.heroTagline}>
+<BaseLayout title={seoTitle} description={service.heroTagline} canonicalPath={`/services/${service.slug}/`}>
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(medicalBusinessSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(medicalProcedureSchema)} />
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
-    <link rel="canonical" href={canonicalUrl} />
-    <meta property="og:title" content={seoTitle} />
-    <meta property="og:description" content={service.heroTagline} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
   </Fragment>
 
   <Header />
@@ -85,7 +67,7 @@ const faqSchema =
   <main>
     <section class="section service-hero">
       <div class="container">
-        <p class="service-label">Service Detail</p>
+        <p class="service-label">Advanced Care</p>
         <h1>{service.title}</h1>
         <p class="service-tagline">{service.heroTagline}</p>
         {service.statusNote && <p class="service-status-note">{service.statusNote}</p>}
@@ -152,8 +134,8 @@ const faqSchema =
         <div class="container">
           <h2>Conditions That May Benefit</h2>
           <p>
-            Many of our services are used to support patients experiencing specific
-            musculoskeletal or neurological symptoms.
+            Many of our services support patients experiencing specific nervous system,
+            musculoskeletal, or recovery-related concerns.
           </p>
           <div class="conditions-grid">
             {relatedConditions.slice(0, 5).map((condition) => (

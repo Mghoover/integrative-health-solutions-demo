@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { siteConfig } from "../config/site";
 
 const forms = [
   {
@@ -31,13 +32,22 @@ const forms = [
   },
 ];
 ---
-<BaseLayout title="Contact Us | Best Florence Chiropractor" description="Contact Us page.">
+<BaseLayout
+  title="Contact Integrative Health Solutions in Florence SC"
+  description="Contact Integrative Health Solutions in Florence, SC to schedule a Brain Restore, HBOT, neurological wellness, or chiropractic evaluation."
+  canonicalPath="/contact-us/"
+>
 <Header />
 <main class="container">
   <section class="section section-accent">
     <div class="card intake-hero">
       <h1>Start Your Visit</h1>
-      <p class="muted">Please complete the appropriate form below before your appointment.</p>
+      <p class="muted">Schedule an evaluation or complete the appropriate intake form before your appointment.</p>
+      <div class="contact-summary" aria-label="Clinic contact information">
+        <a href={`tel:${siteConfig.phone.replace(/[^0-9]/g, "")}`}>{siteConfig.phone}</a>
+        <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+        <span>{siteConfig.address.street}, {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}</span>
+      </div>
     </div>
 
     <div class="intake-grid">

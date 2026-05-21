@@ -10,11 +10,18 @@ export interface ConditionDetailFaqItem {
   answer: string;
 }
 
+export interface ConditionDetailSection {
+  title: string;
+  paragraphs: string[];
+  bulletPoints?: string[];
+}
+
 export interface ConditionDetail {
   slug: string;
   title: string;
   heroTagline: string;
   intro: string[];
+  sections?: ConditionDetailSection[];
   services: string[];
   commonSymptoms?: string[];
   possibleCauses?: string[];

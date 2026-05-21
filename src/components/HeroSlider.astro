@@ -1,9 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import focusedCareImage from "../assets/hero/focusedcare.jpg";
-import getHealthyStayHealthyImage from "../assets/hero/gethealthystayhealthy.jpg";
-import newPatientsWelcomeImage from "../assets/hero/newpatientswelcome.jpg";
-
 let googleBadge = null;
 
 try {
@@ -26,23 +21,44 @@ try {
 
 const slides = [
   {
-    title: "Get Healthy. Stay Healthy.",
-    image: getHealthyStayHealthyImage,
+    eyebrow: "Brain Restore in Florence SC",
+    title: "Advanced Brain & Nervous System Recovery",
+    body:
+      "A calmer, more objective path for patients looking beyond generic wellness care, with neurological evaluation, Brain Restore programs, and recovery-focused therapies.",
+    image: "/images/neuro/brain-imaging-pexels-cottonbro.jpg",
     backgroundPosition: "center",
+    ctas: [
+      { label: "Schedule Evaluation", href: "/contact-us/" },
+      { label: "Learn About Brain Restore", href: "/brain-restore/" }
+    ]
   },
   {
-    title: "Focused Care",
-    image: focusedCareImage,
+    eyebrow: "Hyperbaric Oxygen Therapy",
+    title: "Recovery Support With Pressurized Oxygen",
+    body:
+      "HBOT is being integrated as part of a broader, evidence-aware recovery strategy focused on oxygen delivery, safety, screening, and individualized care.",
+    image: "/images/neuro/hyperbaric-chamber-unsplash-navy-medicine.jpg",
     backgroundPosition: "center",
+    ctas: [
+      { label: "Explore HBOT", href: "/services/hbot/" },
+      { label: "Start Your Recovery Journey", href: "/contact-us/" }
+    ]
   },
   {
-    title: "New Patients Welcome",
-    image: newPatientsWelcomeImage,
+    eyebrow: "Chiropractic + Neurological Wellness",
+    title: "Care That Looks at the Whole Nervous System",
+    body:
+      "Integrative Health Solutions still provides trusted chiropractic care, now framed within a more advanced model for brain health, movement, and long-term resilience.",
+    image: "/images/neuro/advanced-evaluation-pexels-charlss-gonzhu.jpg",
     backgroundPosition: "center",
+    ctas: [
+      { label: "View Services", href: "/services/" },
+      { label: "Request Appointment", href: "/contact-us/" }
+    ]
   },
 ];
 ---
-<section class="hero-carousel" aria-label="Homepage featured messages">
+<section class="hero-carousel" aria-label="Brain Restore and neurological recovery highlights">
   <div class="hero-carousel__track">
     {slides.map((slide, index) => (
       <article
@@ -50,22 +66,26 @@ const slides = [
         style={`--hero-position: ${slide.backgroundPosition ?? "center"};`}
         aria-hidden={index === 0 ? "false" : "true"}
       >
-        <Image
+        <img
           class="hero-carousel__image"
           src={slide.image}
           alt={`${slide.title} at Integrative Health Solutions in Florence SC`}
-          widths={index === 0 ? [480, 768, 960] : [360, 640, 768]}
-          sizes="100vw"
-          format="webp"
-          quality={index === 0 ? 60 : 32}
           loading={index === 0 ? "eager" : "lazy"}
           fetchpriority={index === 0 ? "high" : "auto"}
           decoding="async"
         />
         <div class="hero-carousel__overlay"></div>
         <div class="hero-carousel__content container">
+          <p class="hero-carousel__eyebrow">{slide.eyebrow}</p>
           <h1>{slide.title}</h1>
-          <a class="btn btn-primary" href="/contact-us/">Request Appointment</a>
+          <p class="hero-carousel__body">{slide.body}</p>
+          <div class="hero-carousel__actions" aria-label={`${slide.title} actions`}>
+            {slide.ctas.map((cta, ctaIndex) => (
+              <a class={`btn ${ctaIndex === 0 ? "btn-primary" : "btn-ghost"}`} href={cta.href}>
+                {cta.label}
+              </a>
+            ))}
+          </div>
           {googleBadge && (
             <a
               class="hero-rating-badge"
@@ -100,6 +120,13 @@ const slides = [
           const isActive = index === currentIndex;
           slide.classList.toggle("is-active", isActive);
           slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+          slide.querySelectorAll("a, button").forEach((element) => {
+            if (isActive) {
+              element.removeAttribute("tabindex");
+            } else {
+              element.setAttribute("tabindex", "-1");
+            }
+          });
         });
       };
 

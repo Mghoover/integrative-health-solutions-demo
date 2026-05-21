@@ -1,13 +1,14 @@
 export const siteConfig = {
   clinicName: "Integrative Health Solutions",
-  tagline: "Chiropractic and Wellness Care",
-  phone: "(843) 555-1234",
-  email: "[info@example.com](mailto:info@example.com)",
+  siteUrl: "https://bestflorencechiropractor.com",
+  tagline: "Brain Restore, Neurological Recovery, and Chiropractic Care",
+  phone: "(843) 799-0001",
+  email: "ihsflorencesc@gmail.com",
   address: {
-    street: "",
+    street: "505 W Palmetto St",
     city: "Florence",
     state: "SC",
-    zip: "",
+    zip: "29501",
   },
   heroImages: [
     "/images/gethealthystayhealthy.jpg",

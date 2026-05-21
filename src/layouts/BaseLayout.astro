@@ -1,16 +1,64 @@
 ---
-const { title, description } = Astro.props;
 import { branding } from "../config/branding";
 import { hub } from "../config/hub";
+import { siteConfig } from "../config/site";
 import "../styles/global.css";
+
+const {
+  title = "Brain Restore and Chiropractic Care in Florence SC",
+  description,
+  canonicalPath
+} = Astro.props;
+const metaDescription =
+  description ??
+  "Integrative Health Solutions provides Brain Restore programs, hyperbaric oxygen therapy guidance, neurological wellness support, and chiropractic care in Florence, SC.";
+const fullTitle = title.includes(branding.clinicName)
+  ? title
+  : `${title} | ${branding.clinicName}`;
+const canonicalUrl = canonicalPath
+  ? new URL(canonicalPath, siteConfig.siteUrl).toString()
+  : undefined;
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  name: branding.clinicName,
+  url: siteConfig.siteUrl,
+  telephone: siteConfig.phone,
+  email: siteConfig.email,
+  medicalSpecialty: [
+    "Chiropractic",
+    "Neurological Wellness",
+    "Hyperbaric Oxygen Therapy"
+  ],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: siteConfig.address.street,
+    addressLocality: siteConfig.address.city,
+    addressRegion: siteConfig.address.state,
+    postalCode: siteConfig.address.zip,
+    addressCountry: "US"
+  },
+  areaServed: {
+    "@type": "City",
+    name: "Florence"
+  }
+};
 ---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content={description} />
-  <title>{title} | {branding.clinicName}</title>
+  <meta name="description" content={metaDescription} />
+  <title>{fullTitle}</title>
+  {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+  <meta property="og:site_name" content={branding.clinicName} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={metaDescription} />
+  <meta property="og:type" content="website" />
+  {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
   <slot name="head" />
   <link rel="icon" type="image/png" href={branding.favicon} sizes="32x32" />
   <link rel="shortcut icon" href={branding.favicon} />

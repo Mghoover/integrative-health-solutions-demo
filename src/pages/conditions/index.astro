@@ -3,12 +3,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import conditions from "../../data/conditions/index";
+import { siteConfig } from "../../config/site";
 import type { ConditionDetail } from "../../types/condition-detail";
 
 const seoTitle = "Conditions Treated in Florence SC";
 const seoDescription =
-  "Common conditions treated in Florence SC including back pain, neck pain, whiplash, neuropathy, and headaches.";
-const canonicalUrl = "https://bestflorencechiro.com/conditions";
+  "Neurological, nerve, spine, and recovery-focused conditions supported in Florence SC including neuropathy, headaches, back pain, neck pain, and whiplash.";
+const canonicalUrl = `${siteConfig.siteUrl}/conditions`;
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -17,7 +18,7 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://bestflorencechiro.com"
+      item: siteConfig.siteUrl
     },
     {
       "@type": "ListItem",
@@ -31,13 +32,8 @@ const breadcrumbSchema = {
 const conditionCards = conditions as ConditionDetail[];
 ---
 
-<BaseLayout title={seoTitle} description={seoDescription}>
+<BaseLayout title={seoTitle} description={seoDescription} canonicalPath="/conditions/">
   <Fragment slot="head">
-    <link rel="canonical" href={canonicalUrl} />
-    <meta property="og:title" content={`${seoTitle} | Integrative Health Solutions`} />
-    <meta property="og:description" content={seoDescription} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   </Fragment>
 
@@ -52,8 +48,9 @@ const conditionCards = conditions as ConditionDetail[];
           Helping Patients Find Relief From Common Conditions
         </p>
         <p class="conditions-intro">
-          Our providers evaluate a variety of musculoskeletal and neurological concerns including
-          back pain, headaches, nerve symptoms, and injury-related conditions.
+          Our providers evaluate musculoskeletal, nerve-related, and neurological wellness
+          concerns including back pain, headaches, neuropathy symptoms, and injury-related
+          recovery needs.
         </p>
       </div>
     </section>

@@ -5,7 +5,9 @@ import Footer from "../components/Footer.astro";
 import { pages } from "../content/pages";
 import { people } from "../config/people";
 
-const providers = people.filter((person) => person.role === "doctor");
+const providers = people
+  .filter((person) => person.role === "doctor")
+  .sort((a, b) => (a.name.includes("Kristin") ? -1 : b.name.includes("Kristin") ? 1 : 0));
 const staff = people.filter((person) => person.role === "staff");
 
 const toParagraphs = (text = "") =>
@@ -14,13 +16,28 @@ const toParagraphs = (text = "") =>
     .map((line) => line.trim())
     .filter(Boolean);
 ---
-<BaseLayout title="About Us | Best Florence Chiropractor" description="About Us page.">
+<BaseLayout
+  title="About Integrative Health Solutions"
+  description="Meet the Florence, SC team behind Integrative Health Solutions, Brain Restore programs, chiropractic care, neurological wellness support, and recovery-focused services."
+  canonicalPath="/about-us/"
+>
 <Header />
 <main>
   <section class="section">
     <div class="container">
       <h1>{pages.about.introTitle}</h1>
       <div class="card">{toParagraphs(pages.about.introBody).map((paragraph) => <p>{paragraph}</p>)}</div>
+      <div class="leadership-panel">
+        <p class="leadership-label">Brain Restore Leadership</p>
+        <h2>Clinical thinking for patients who feel missed</h2>
+        <p>
+          Dr. Kristin Hieshetter's Brain Restore direction brings a stronger neurological
+          framework to the clinic: brain health, nervous system regulation, metabolic
+          support, chiropractic care, laser therapy, and HBOT discussion organized around
+          function and recovery capacity.
+        </p>
+        <a class="btn btn-primary" href="/brain-restore/">Explore Brain Restore</a>
+      </div>
     </div>
   </section>
 
@@ -84,3 +101,35 @@ const toParagraphs = (text = "") =>
 </main>
 <Footer />
 </BaseLayout>
+
+<style>
+  .leadership-panel {
+    margin-top: 22px;
+    padding: 28px;
+    border-radius: 16px;
+    background:
+      linear-gradient(120deg, rgba(7, 17, 31, 0.94), rgba(25, 49, 84, 0.86)),
+      url("/images/neuro/advanced-evaluation-pexels-charlss-gonzhu.jpg") center / cover;
+    color: #ffffff;
+    box-shadow: 0 18px 50px rgba(13, 23, 38, 0.2);
+  }
+
+  .leadership-panel h2,
+  .leadership-panel p {
+    color: #ffffff;
+  }
+
+  .leadership-label {
+    margin: 0 0 8px;
+    color: #9ae6c5;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .leadership-panel p:not(.leadership-label) {
+    max-width: 820px;
+    line-height: 1.7;
+  }
+</style>
