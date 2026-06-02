@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://bestflorencechiropractor.com/sitemap-index.xml

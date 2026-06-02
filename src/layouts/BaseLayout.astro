@@ -7,7 +7,8 @@ import "../styles/global.css";
 const {
   title = "Brain Restore and Chiropractic Care in Florence SC",
   description,
-  canonicalPath
+  canonicalPath,
+  robots = "index, follow"
 } = Astro.props;
 const metaDescription =
   description ??
@@ -22,7 +23,14 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "MedicalBusiness",
   name: branding.clinicName,
+  alternateName: [
+    "Best Florence Chiropractor",
+    "Best Florence Chiro",
+    "Your Florence Chiro",
+    "Your Florence Chiros"
+  ],
   url: siteConfig.siteUrl,
+  sameAs: siteConfig.domainAliases,
   telephone: siteConfig.phone,
   email: siteConfig.email,
   medicalSpecialty: [
@@ -43,6 +51,19 @@ const localBusinessSchema = {
     name: "Florence"
   }
 };
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: branding.clinicName,
+  alternateName: [
+    "Best Florence Chiropractor",
+    "Best Florence Chiro",
+    "Your Florence Chiro",
+    "Your Florence Chiros"
+  ],
+  url: siteConfig.siteUrl,
+  sameAs: siteConfig.domainAliases
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -50,6 +71,7 @@ const localBusinessSchema = {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content={metaDescription} />
+  <meta name="robots" content={robots} />
   <title>{fullTitle}</title>
   {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
   <meta property="og:site_name" content={branding.clinicName} />
@@ -59,6 +81,7 @@ const localBusinessSchema = {
   {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
   <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   <slot name="head" />
   <link rel="icon" type="image/png" href={branding.favicon} sizes="32x32" />
   <link rel="shortcut icon" href={branding.favicon} />

@@ -1,6 +1,11 @@
 export const siteConfig = {
   clinicName: "Integrative Health Solutions",
   siteUrl: "https://bestflorencechiropractor.com",
+  domainAliases: [
+    "https://bestflorencechiro.com",
+    "https://yourflorencechiro.com",
+    "https://yourflorencechiros.com",
+  ],
   tagline: "Brain Restore, Neurological Recovery, and Chiropractic Care",
   phone: "(843) 799-0001",
   email: "ihsflorencesc@gmail.com",
