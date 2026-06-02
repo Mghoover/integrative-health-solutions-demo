@@ -717,15 +717,31 @@ button {
 @media (max-width: 767px) {
   .hero-carousel {
     height: auto;
-    min-height: 620px;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .hero-carousel__track {
+    height: auto;
+  }
+
+  .hero-carousel__slide {
+    position: relative;
+    display: none;
+    min-height: 0;
+    opacity: 1;
+  }
+
+  .hero-carousel__slide.is-active {
+    display: flex;
   }
 
   .hero-carousel__content {
-    padding: 80px 20px 60px;
+    padding: 48px 20px 44px;
   }
 
   .hero-carousel__content h1 {
-    font-size: clamp(2.2rem, 9vw, 3.1rem);
+    font-size: clamp(2rem, 8vw, 2.8rem);
     line-height: 1.08;
   }
 
