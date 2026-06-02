@@ -30,7 +30,7 @@ Our care model still includes trusted chiropractic care, but it now places great
     `,
 
     missionStatement: `
-      Our team is committed to helping patients pursue better function, clearer understanding, and more resilient health through a multimodal approach to brain, body, and nervous system care.
+      Providing exceptional chiropractic care, supportive therapies, and nutritional supplementation to help clients achieve robust health is our mission.
     `,
 
     visionStatement: `

@@ -518,15 +518,16 @@ button {
 
 @media (max-width: 767px) {
   header {
-    padding: 12px 16px;
+    position: static;
+    padding: 10px 0;
   }
 
   header img {
-    max-height: 48px;
+    max-height: 42px;
   }
 
   .site-logo {
-    max-height: 48px;
+    max-height: 42px;
   }
 
   .section {
@@ -547,25 +548,36 @@ button {
   header .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 14px;
   }
 
   header nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px 14px;
-    justify-content: center;
-    width: 100%;
-    margin-top: 8px;
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    gap: 12px;
+    justify-content: flex-start;
+    width: auto;
+    min-width: 0;
+    margin-top: 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
 
-  header img {
-    max-height: 48px;
+  header nav::-webkit-scrollbar {
+    display: none;
   }
 
   header nav a {
-    padding: 6px 4px;
+    flex: 0 0 auto;
+    padding: 8px 2px;
+    white-space: nowrap;
+    font-size: 0.92rem;
+    margin-right: 0;
   }
 
   .conditions-grid {

@@ -103,10 +103,6 @@ const toParagraphs = (text = "") =>
         <h2>Mission</h2>
         {toParagraphs(pages.home.missionStatement).map((paragraph) => <p>{paragraph}</p>)}
       </article>
-      <article>
-        <h2>Vision</h2>
-        {toParagraphs(pages.home.visionStatement).map((paragraph) => <p>{paragraph}</p>)}
-      </article>
     </div>
   </section>
 
@@ -306,7 +302,7 @@ const toParagraphs = (text = "") =>
 
   .foundation-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 22px;
   }
 
