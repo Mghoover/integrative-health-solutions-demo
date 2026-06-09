@@ -1,6 +1,5 @@
 ---
 import { branding } from "../config/branding";
-import { hub } from "../config/hub";
 import { siteConfig } from "../config/site";
 import "../styles/global.css";
 
@@ -85,17 +84,83 @@ const websiteSchema = {
   <slot name="head" />
   <link rel="icon" type="image/png" href={branding.favicon} sizes="32x32" />
   <link rel="shortcut icon" href={branding.favicon} />
-  <script
-    is:inline
-    set:html={`window.ORDINIS_HUB_CONFIG = ${JSON.stringify({
-      siteId: hub.siteId,
-      endpointUrl: hub.endpointUrl,
-      heartbeatDelayMs: 15000,
-    })};`}
-  ></script>
-  <script defer src="/scripts/ordinis-hub.js"></script>
+  <script is:inline>window.ORDINIS_SITE_ID = "ihs";</script>
+  <script async src="/scripts/tracking-snippet.js"></script>
 </head>
 <body>
   <slot />
+  <script is:inline>
+    (() => {
+      const withAnalytics = (callback, attempts = 20) => {
+        if (window.ordinisAnalytics?.track) {
+          callback(window.ordinisAnalytics);
+          return;
+        }
+
+        if (attempts <= 0) return;
+        window.setTimeout(() => withAnalytics(callback, attempts - 1), 150);
+      };
+
+      const formLabel = (element) =>
+        element?.getAttribute("data-ordinis-value") ||
+        element?.getAttribute("data-ordinis-form") ||
+        "form";
+
+      const markFormStart = (element) => {
+        if (!element || element.dataset.ordinisStarted === "true") return;
+        element.dataset.ordinisStarted = "true";
+        withAnalytics((analytics) => {
+          analytics.track("form_start", {
+            event_value: formLabel(element),
+            form_id: element.getAttribute("data-form-id"),
+          });
+        });
+      };
+
+      const initEmbeddedForms = () => {
+        document.querySelectorAll("[data-ordinis-form]").forEach((element) => {
+          element.addEventListener("pointerdown", () => markFormStart(element), {
+            once: true,
+            capture: true,
+          });
+        });
+      };
+
+      window.addEventListener("message", (event) => {
+        const raw = event.data;
+        const message =
+          typeof raw === "string" ? raw : raw && typeof raw === "object" ? JSON.stringify(raw) : "";
+        if (!/jotform|submission/i.test(message)) return;
+
+        const contactForm = document.querySelector('[data-ordinis-form="contact"]');
+        if (!contactForm) return;
+
+        const detail = {
+          form: formLabel(contactForm),
+          form_id: contactForm.getAttribute("data-form-id"),
+          provider: "jotform",
+        };
+
+        if (/submission-completed|submit|thank/i.test(message)) {
+          withAnalytics((analytics) => {
+            analytics.track("contact_form_submit", {
+              event_value: detail.form,
+              form_id: detail.form_id,
+              provider: detail.provider,
+            });
+          });
+          window.dispatchEvent(new CustomEvent("ordinis:form-success", { detail }));
+        } else if (/error|fail|invalid/i.test(message)) {
+          window.dispatchEvent(new CustomEvent("ordinis:form-failure", { detail }));
+        }
+      });
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initEmbeddedForms, { once: true });
+      } else {
+        initEmbeddedForms();
+      }
+    })();
+  </script>
 </body>
 </html>

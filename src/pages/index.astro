@@ -28,8 +28,8 @@ const toParagraphs = (text = "") =>
         <h2>{pages.home.welcomeTitle}</h2>
         {toParagraphs(pages.home.welcomeBody).map((paragraph) => <p>{paragraph}</p>)}
         <div class="inline-actions">
-          <a class="btn btn-primary" href="/brain-restore/">Explore Brain Restore</a>
-          <a class="btn btn-secondary" href="/services/hbot/">Learn About HBOT</a>
+          <a class="btn btn-primary" href="/brain-restore/" data-ordinis-event="cta_click" data-ordinis-value="explore_brain_restore">Explore Brain Restore</a>
+          <a class="btn btn-secondary" href="/services/hbot/" data-ordinis-event="cta_click" data-ordinis-value="learn_about_hbot">Learn About HBOT</a>
         </div>
       </div>
       <aside class="signal-panel" aria-label="Brain Restore care pillars">
@@ -123,7 +123,7 @@ const toParagraphs = (text = "") =>
       ))}
     </div>
 
-    <a class="view-all-conditions" href="/conditions">
+    <a class="view-all-conditions" href="/conditions" data-ordinis-event="cta_click" data-ordinis-value="view_all_conditions">
       View All Conditions &rarr;
     </a>
     </div>

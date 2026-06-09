@@ -59,7 +59,7 @@ const toParagraphs = (text = "") =>
           nerve-related symptoms, and recovery planning.
         </p>
       </div>
-      <a class="btn btn-primary" href="/brain-restore/">Learn About Brain Restore</a>
+      <a class="btn btn-primary" href="/brain-restore/" data-ordinis-event="cta_click" data-ordinis-value="services_learn_about_brain_restore">Learn About Brain Restore</a>
     </div>
     <div class="services">
       <h2>Featured Services</h2>
@@ -112,6 +112,8 @@ const toParagraphs = (text = "") =>
             href={fullScriptsUrl}
             target="_blank"
             rel="noopener noreferrer"
+            data-ordinis-event="cta_click"
+            data-ordinis-value="fullscript_patient_portal"
           >
             Access Fullscript Patient Portal
           </a>
@@ -137,6 +139,8 @@ const toParagraphs = (text = "") =>
               type="button"
               data-copy-value={standardProcessCode}
               data-status-id="std-code-copy-status"
+              data-ordinis-event="cta_click"
+              data-ordinis-value="standard_process_copy_code"
             >
               Copy code
             </button>
@@ -149,6 +153,8 @@ const toParagraphs = (text = "") =>
             href={standardProcessUrl}
             target="_blank"
             rel="noopener noreferrer"
+            data-ordinis-event="cta_click"
+            data-ordinis-value="standard_process_portal"
           >
             Access Standard Process Portal
           </a>
@@ -174,7 +180,7 @@ const toParagraphs = (text = "") =>
       <p>
         Begin your patient intake and schedule your visit with our clinic.
       </p>
-      <a href="/contact-us/" class="btn btn-primary">
+      <a href="/contact-us/" class="btn btn-primary" data-ordinis-event="appointment_request" data-ordinis-value="services_start_patient_intake">
         Start Patient Intake
       </a>
     </div>

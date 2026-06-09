@@ -81,7 +81,12 @@ const slides = [
           <p class="hero-carousel__body">{slide.body}</p>
           <div class="hero-carousel__actions" aria-label={`${slide.title} actions`}>
             {slide.ctas.map((cta, ctaIndex) => (
-              <a class={`btn ${ctaIndex === 0 ? "btn-primary" : "btn-ghost"}`} href={cta.href}>
+              <a
+                class={`btn ${ctaIndex === 0 ? "btn-primary" : "btn-ghost"}`}
+                href={cta.href}
+                data-ordinis-event={cta.href === "/contact-us/" ? "appointment_request" : "cta_click"}
+                data-ordinis-value={cta.label}
+              >
                 {cta.label}
               </a>
             ))}
@@ -92,6 +97,8 @@ const slides = [
               href={googleBadge.googleUrl}
               target="_blank"
               rel="noopener noreferrer"
+              data-ordinis-event="cta_click"
+              data-ordinis-value="google_reviews"
             >
               {`\u2605 ${googleBadge.rating} on Google \u2022 ${googleBadge.totalReviews} reviews`}
             </a>

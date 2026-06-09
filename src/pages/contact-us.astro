@@ -31,6 +31,7 @@ const forms = [
     href: "/intake/contact",
   },
 ];
+const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${siteConfig.address.street}, ${siteConfig.address.city}, ${siteConfig.address.state} ${siteConfig.address.zip}`)}`;
 ---
 <BaseLayout
   title="Contact Integrative Health Solutions in Florence SC"
@@ -46,7 +47,9 @@ const forms = [
       <div class="contact-summary" aria-label="Clinic contact information">
         <a href={`tel:${siteConfig.phone.replace(/[^0-9]/g, "")}`}>{siteConfig.phone}</a>
         <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-        <span>{siteConfig.address.street}, {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}</span>
+        <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
+          {siteConfig.address.street}, {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}
+        </a>
       </div>
     </div>
 
@@ -55,7 +58,14 @@ const forms = [
         <div class="card intake-card">
           <h2>{form.title}</h2>
           <p class="muted">{form.description}</p>
-          <a class="btn btn-primary" href={form.href}>Open Form</a>
+          <a
+            class="btn btn-primary"
+            href={form.href}
+            data-ordinis-event={form.href === "/intake/contact" ? "cta_click" : "appointment_request"}
+            data-ordinis-value={form.title}
+          >
+            Open Form
+          </a>
         </div>
       ))}
     </div>

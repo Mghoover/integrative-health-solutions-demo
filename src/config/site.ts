@@ -5,6 +5,8 @@ export const siteConfig = {
     "https://bestflorencechiro.com",
     "https://yourflorencechiro.com",
     "https://yourflorencechiros.com",
+    "https://yourflorencechiropractors.com",
+    "https://ihs.demo.ordinistechnologies.com",
   ],
   tagline: "Brain Restore, Neurological Recovery, and Chiropractic Care",
   phone: "(843) 799-0001",

@@ -14,7 +14,13 @@ const formId = siteConfig.intakeForms.uhc.trim();
       <h1>United Healthcare Summary</h1>
       <p class="muted">Please complete this form before your appointment.</p>
       {formId ? (
-        <div class="form-embed" data-form-id={formId}>
+        <div
+          class="form-embed"
+          data-form-id={formId}
+          data-ordinis-form="appointment_request"
+          data-ordinis-event="appointment_request"
+          data-ordinis-value="uhc_intake"
+        >
           <script is:inline>
             (() => {
               const root = document.currentScript?.parentElement;

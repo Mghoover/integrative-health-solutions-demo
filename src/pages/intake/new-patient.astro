@@ -14,7 +14,13 @@ const formId = siteConfig.intakeForms.newPatient.trim();
       <h1>New Patient Intake</h1>
       <p class="muted">Please complete this form before your appointment.</p>
       {formId ? (
-        <div class="form-embed" data-form-id={formId}>
+        <div
+          class="form-embed"
+          data-form-id={formId}
+          data-ordinis-form="appointment_request"
+          data-ordinis-event="appointment_request"
+          data-ordinis-value="new_patient_intake"
+        >
           <script is:inline>
             (() => {
               const root = document.currentScript?.parentElement;

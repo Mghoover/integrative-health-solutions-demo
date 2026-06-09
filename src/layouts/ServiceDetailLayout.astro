@@ -155,7 +155,7 @@ const faqSchema =
           <div class="cta-content">
             <h2>{service.cta.title}</h2>
             <p>{service.cta.description}</p>
-            <a href={ctaHref} class="btn btn-primary">{service.cta.buttonText}</a>
+            <a href={ctaHref} class="btn btn-primary" data-ordinis-event="appointment_request" data-ordinis-value={service.cta.buttonText}>{service.cta.buttonText}</a>
           </div>
         </aside>
       </div>
